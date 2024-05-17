@@ -237,22 +237,26 @@ def handle_tcp_packet(packet, src_ip, dst_ip, stats):
         stats['tls'] += 1
 
 
+def safeset(dict, key, value):
+    if key in dict:
+        if dict[key] != value:
+            raise RuntimeException(f"caught overwrite of key '{key}' old value '{dict['key']} by value '{value}'")
+    else:
+        dict[key] = value
+
 def handle_tls_packet(packet, stream, direction, tls_field):
     if 'handshake_extensions_server_name' in packet[tls_field].field_names \
         and packet[tls_field].handshake_extensions_server_name != '':
         sni = packet[tls_field].handshake_extensions_server_name.lower()
-        assert('sni' not in stream)
-        stream['sni'] = sni
+        safeset(stream, 'sni', sni)
 
     if 'handshake_ja3' in packet[tls_field].field_names:
         ja3 = packet[tls_field].handshake_ja3
-        assert('ja3' not in stream)
-        stream['ja3'] = ja3
+        safeset(stream, 'ja3', ja3)
 
     if 'handshake_ja3s' in packet[tls_field].field_names:
         ja3s = packet[tls_field].handshake_ja3s
-        assert('ja3s' not in stream)
-        stream['ja3s'] = ja3s
+        safeset(stream, 'ja3s', ja3s)
 
     if 'handshake_certificates' in packet[tls_field].field_names:
         cert = packet[tls_field].handshake_certificate
@@ -263,8 +267,7 @@ def handle_tls_packet(packet, stream, direction, tls_field):
         elif direction == 2: # server
             field_name = f"server_cn"
 
-        assert(field_name not in stream)
-        stream[field_name] = cn
+        safeset(stream, field_name, cn)
 
 def load_pcap_file_timestamps(pcap_files):
     """
