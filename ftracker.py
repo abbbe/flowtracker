@@ -477,7 +477,8 @@ def dump_dns_streams(dump_all=False):
     if True:
         clean_df = all_df.copy(deep=True)
         # drop q_count column
-        clean_df = clean_df.drop(columns=['q_count'])
+        if 'q_count' in clean_df.columns:
+            clean_df = clean_df.drop(columns=['q_count'])
         # drop q_count from the responses
         def cleanup_responses(responses):
             return {k: v for k, v in responses.items() if k != 'q_count'}
