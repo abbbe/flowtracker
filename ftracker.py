@@ -452,6 +452,9 @@ def dump_udp_streams(dump_all=False, dump_aggregated=False):
         print(new_df.to_markdown())
 
 def pretty_format_queries(all_df):
+    if 'responses' not in all_df.columns:
+        return all_df
+
     # reformat dns queries to make it more compact and readable
     def format_queries(queries):
         queries = json.loads(json.dumps(queries, indent=4)) # convert to JSON and back to get rid of garbage
