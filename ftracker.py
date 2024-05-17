@@ -484,7 +484,7 @@ def dump_dns_streams(dump_all=False):
         print("\nNEW DNS STREAMS:\n")
         print(pretty_format_queries(new_df).to_markdown())
 
-def main(pcap_files):
+def main():
     pcap_files = sys.argv[1:]
     current_pcap_file = None
     stats = {counter: 0 for counter in ['non-ip', 'ip', 'ipv6', 'tcp', 'udp', 'non-tcp-udp', 'tls', 'dns']}
