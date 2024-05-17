@@ -484,7 +484,8 @@ def dump_dns_streams(dump_all=False):
         print("\nNEW DNS STREAMS:\n")
         print(pretty_format_queries(new_df).to_markdown())
 
-def main(pcap_files):    
+def main(pcap_files):
+    pcap_files = sys.argv[1:]
     current_pcap_file = None
     stats = {counter: 0 for counter in ['non-ip', 'ip', 'ipv6', 'tcp', 'udp', 'non-tcp-udp', 'tls', 'dns']}
 
@@ -507,4 +508,4 @@ def main(pcap_files):
     handle_pcap_file_roll(current_pcap_file, None, stats)
     
 if __name__ == '__main__':
-    main(sys.argv[1:])
+    main()

@@ -14,7 +14,8 @@ dependencies = [
   "loguru",
   "pandas",
   "pyshark",
-  "tabulate"
+  "tabulate",
+  "pyyaml"
 ]
 #FIXME
 license = {text = "MIT License"}
