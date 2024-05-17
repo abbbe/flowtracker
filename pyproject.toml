@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ftracker"
+readme = "README.md"
+dynamic = ["version"]
+authors = [
+  {name = "Alexandre Bezroutchko", email = "abb@gremwell.com"}
+]
+dependencies = [
+  "cryptography",
+  "loguru",
+  "pandas",
+  "pyshark",
+  "tabulate"
+]
+#FIXME
+license = {text = "MIT License"}
+keywords = ["egg", "bacon", "sausage", "tomatoes", "Lobster Thermidor"]
+
+[project.urls]
+Homepage = "https://www.grewmell.com/ftracker"
+Repository = "https://github.com/abbbe/ftracker.git"
+
+[project.scripts]
+ftracker = "ftracker:main"
