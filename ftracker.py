@@ -479,10 +479,12 @@ def dump_dns_streams(dump_all=False):
         # drop q_count column
         if 'q_count' in clean_df.columns:
             clean_df = clean_df.drop(columns=['q_count'])
+
         # drop q_count from the responses
-        def cleanup_responses(responses):
-            return {k: v for k, v in responses.items() if k != 'q_count'}
-        clean_df['responses'] = clean_df['responses'].apply(lambda x: cleanup_responses(x))
+        if 'responses' in clean_df.columns:
+            def cleanup_responses(responses):
+                return {k: v for k, v in responses.items() if k != 'q_count'}
+            clean_df['responses'] = clean_df['responses'].apply(lambda x: cleanup_responses(x))
         new_df = get_new_streams('dns', clean_df)
 
         print("\nNEW DNS STREAMS:\n")
